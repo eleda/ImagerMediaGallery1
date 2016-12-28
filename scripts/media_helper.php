@@ -247,6 +247,17 @@ function player($file, $typ) {
 		case 2 :
 			?>
 			<?php include('templates/fragments/wmp_player.php'); ?>
+			<?php
+			break;
+		case 3 :
+			?>
+			<?php include('templates/fragments/videojs_player.php'); ?>
+			<?php
+			break;
+		case 4 :
+			?>
+			<?php include('templates/fragments/html5_player.php'); ?>
+			<?php
 			break;
 		default :
 			?>

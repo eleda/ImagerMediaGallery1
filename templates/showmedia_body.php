@@ -1,13 +1,15 @@
+<?php $playertype = 4; ?>
+
 <table width='100%' border='0' cellspacing='0' cellpadding='0'>
   <tr>
     <td valign="top">	
 	<h1>
-		<img src="med.gif" width="15" height="15" border="0"/>
+		<img src="images/med.gif" width="15" height="15" border="0"/>
 		<!-- kis kepecske -->
 		<?php echo $a_title; ?>
 		<?php downloadbutton ( $url ) ?>
 	</h1>
-	<?php player ( $fullfilename, 1 ) ?>
+	<?php player ( $fullfilename, $playertype ) ?>
 	
 	<p class='war'>
 		Ha a lejátszó nem jelenik meg, kattintson az URL címre az letöltéshez.
