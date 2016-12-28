@@ -1,99 +1,61 @@
-<!-- EZ AZ ADMIN FELULET!!! -->
+<?php
+
+// GET CURRENT URL ROOT
+function curURL() {
+	$pageURL = 'http';
+	$pageURL .= "://";
+	if ($_SERVER ["SERVER_PORT"] != "80") {
+		$pageURL .= $_SERVER ["SERVER_NAME"] . ":" . $_SERVER ["SERVER_PORT"];
+	} else {
+		$pageURL .= $_SERVER ["SERVER_NAME"];
+	}
+	$pageURL .= dirname ( $_SERVER ['PHP_SELF'] );
+	return $pageURL;
+}
+
+// GET CURRENT PHP FILE WITH FULL PATH
+function curpurl() {
+	return curURL () . '/' . basename ( $_SERVER ['PHP_SELF'] );
+}
+
+// /
+
+// VIEW FUNCS
 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Feltöltés</title>
-<link href="form" rel="stylesheet" type="text/css" />
-<link href="form.css" rel="stylesheet" type="text/css" />
-</head>
+function mkpw() {
+	?>
+	<form name=form1 method=post action="index.php">
+	<input type=text name=npw id=npw>
+	<input type=submit name=snd id=snd value="Ok">
+	</form>
+	<?php
+}
 
-<body>
-	<h1>
-		Imager weboldal egységes feltöltő Frissítve:
-		<!-- #BeginDate format:IS1 -->
-		2011-2016
-		<!-- #EndDate -->		
-	</h1>
-	<hr />
-	<p>
-  <?php
-		$picp = 0;
-		$pw = isset ( $_POST ["pw"] ) ? $_POST ["pw"] : "";
-		
-		if ($pw == "*") {
-			setcookie ( "pw", "" );
-			$picp = 0;
-		}
-		if ($pw != "") {
-			setcookie ( "pw", md5 ( $pw ) );
-		}
-		
-		$pw = isset ( $_COOKIE ["pw"] ) ? $_COOKIE ["pw"] : $pw;
-		
-		$meth = isset ( $_GET ["method"] ) ? $_GET ["method"] : "";
-		$npw = isset ( $_POST ["npw"] ) ? $_POST ["npw"] : "";
-		
-		$pwf = "#&@[]~$$~@#";
-		function mkpw() {
-			echo "<form name=form1 method=post action='upload.php'>";
-			echo "  <input type=text name=npw id=npw>";
-			echo "   <input type=submit name=snd id=snd value=Ok>";
-			echo " </form>";
-		}
-		
-		if ($npw != "") {
-			echo "Most új jelszó jön létre:";
-			$file = fopen ( $pwf, "w" );
-			echo fwrite ( $file, md5 ( $npw ) );
-			echo $npw;
-			echo "Új jelszó létrehozva.";
-			fclose ( $file );
-		}
-		
-		if (file_exists ( $pwf )) {
-			$file = fopen ( $pwf, "r" );
-			$mcc = fgets ( $file );
-			fclose ( $file );
-		} else {
-			echo "Még nincsen jelszó.";
-			$picp = 1;
-			$meth = "mkpw";
-		}
-		function enterpw($p) {
-			echo "<form name=form1 method=post action='upload.php'>";
-			if ($p == '') {
-				echo "  <p>A feltöltő használatához írja be a jelszót.</p>";
-			} else {
-				echo "<p>Rossz jelszó. Írja be a helyes jelszót.</p>";
-			}
-			
-			echo "  Jelszó";
-			echo "  <input type=password name='pw' id='pw'>";
-			echo "  </label>";
-			echo "  <label>";
-			echo "  <input type=submit name=snd2 id=snd2 value='Bejelentkezés'>";
-			echo "  </label>";
-			echo "</form>";
-		}
-		// GET CURRENT URL ROOT
-		function curURL() {
-			$pageURL = 'http';
-			$pageURL .= "://";
-			if ($_SERVER ["SERVER_PORT"] != "80") {
-				$pageURL .= $_SERVER ["SERVER_NAME"] . ":" . $_SERVER ["SERVER_PORT"];
-			} else {
-				$pageURL .= $_SERVER ["SERVER_NAME"];
-			}
-			$pageURL .= dirname ( $_SERVER ['PHP_SELF'] );
-			return $pageURL;
-		}
-		// GET CURRENT PHP FILE WITH FULL PATH
-		function curpurl() {
-			return curURL () . '/' . basename ( $_SERVER ['PHP_SELF'] );
-		}
+function enterpw($p) {
+	?>
+	<form name=form1 method=post action='index.php'>
+	<?php
+	if ($p == '') {
+		?>
+		<p>A feltöltő használatához írja be a jelszót.</p>
+		<?php
+	} else {
+		?>
+		<p>Rossz jelszó. Írja be a helyes jelszót.</p>
+		<?php
+	}
+	?>	
+	Jelszó
+	<input type=password name='pw' id='pw'>
+	</label>
+	<label>
+	<input type=submit name=snd2 id=snd2 value='Bejelentkezés'>
+	</label>
+	</form>
+	<?php
+}
+
 		function pictures($typ, $fold) {
 			$dirs = array ();
 			$dirn = array ();
@@ -143,12 +105,12 @@
 					echo "<ul>";
 					
 					while ( ($fil = readdir ( $dir )) !== false ) {
-						
 						$pon = (substr ( stristr ( $fil, "." ), 0, 1 ) == ".");
 						
 						if ($pon != 1) {
 							
-							$lin = $curpurl . "?method=pictures&dir=" . $dirs [$i] . "&subdir=" . $fil;
+							$lin = $curpurl . "?method=pictures&dir=" . $dirs [$i]		
+				 . "&subdir=" . $fil;
 							echo "<li><a href=" . $lin . ">" . $fil . "</a></li>";
 						}
 					}
@@ -160,6 +122,7 @@
 				echo "</ul>";
 			}
 		}
+
 		function choosemethod() {
 			$meths = array ();
 			$methn = array ();
@@ -179,6 +142,8 @@
 				echo "<li><a href=" . $lin . ">" . $methn [$i] . "</a></li>";
 			}
 		}
+
+
 		function filecombo($dir, $ext, $id) {
 			echo "    <label>Kategória";
 			echo "    <select name='" . $id . "' id='" . $id . "'>";
@@ -206,6 +171,11 @@
 			echo "    </select>";
 			echo "    </label>";
 		}
+
+
+
+		
+
 		function images($dir, $id) {
 			$parray = array ();
 			
@@ -257,7 +227,8 @@
 			
 			// $l=curpurl()."?method=pictures&dir=". http://imager.fw.hu/upload.php?method=pictures&dir=news&subdir=maxor
 		}
-		function galleryform() {
+
+				function galleryform() {
 			$gn = $_POST ["gn"];
 			$des = $_POST ["des"];
 			$picno = $_POST ["picno"];
@@ -312,6 +283,9 @@
 				echo "</form>";
 			}
 		}
+
+
+
 		function downloadform() {
 			$cat = isset ( $_POST ["kat"] ) ? $_POST ["kat"] : "";
 			
@@ -365,15 +339,17 @@
 				echo "</form>";
 			}
 		}
-		function mediaform() {
-			$cat = $_POST ["kat"];
+
+			function mediaform() {			
+
+			$cat = isset($_POST["kat"]) ? $_POST ["kat"] : "";
 			
 			echo "<h2>Új elem a médiatárba</h2>";
 			echo "<h3>1. Kategória kiválasztása</h3>";
 			
-			echo "<form action='upload.php?method=media' method='post' enctype='multipart/form-data' name='form1' id='form1'>";
+			echo "<form action='index.php?method=media' method='post' enctype='multipart/form-data' name='form1' id='form1'>";
 			//
-			filecombo ( "media", ".txt", "kat" );
+			filecombo ( "../media", ".txt", "kat" );
 			echo "    <input type='submit' name='ffel' id='ffel' value='Kategóriaváltás' />";
 			
 			echo "</form>";
@@ -395,10 +371,10 @@
 				echo "  <input type='text' name='cim' id='cim' />";
 				echo "  </label>";
 				echo "  <p>";
-				filesc ( "media/" . $cat, ".med", "ufile" );
+				filesc ( "../media/" . $cat, ".med", "ufile" );
 				echo "  </p>";
 				echo "  <p>";
-				images ( "media/" . $cat, "kep" );
+				images ( "../media/" . $cat, "kep" );
 				// echo "<a href='".$curpurl."?method=pictures"."' target='_blank'>Kép neve...</a></p>" ;
 				echo "  </p>";
 				echo "  <p>";
@@ -418,6 +394,9 @@
 				echo "</form>";
 			}
 		}
+
+
+	
 		function articleform() {
 			$cat = isset ( $_POST ["kat"] ) ? $_POST ["kat"] : "";
 			
@@ -475,60 +454,3 @@
 				echo "</form>";
 			}
 		}
-		// echo $picp;
-		
-		if ($pw == $mcc) {
-			$picp = 1;
-		} else {
-			$picp = 0;
-		}
-		$picp = 1;
-		if ($picp == 1) {
-			
-			// setcookie("pw", md5($pw), time()+3600);
-			
-			echo "<p>Állapota bejelentkezve.";
-			
-			echo "<form id=lof name=lof method=post action=" . curpurl () . ">";
-			echo "  <label>";
-			echo "<input type=hidden name='pw' id='pw' value='*'>";
-			echo "<input type=submit name=logout id=logout value=Kijelentkezés />";
-			echo "  </label>";
-			echo "</form></p>";
-			
-			switch ($meth) {
-				case "article" :
-					articleform ();
-					break;
-				case "pictures" :
-					$fol = $_GET ["dir"];
-					$sfol = $_GET ["subdir"];
-					pictures ( $fol, $sfol );
-					break;
-				case "download" :
-					downloadform ();
-					break;
-				case "media" :
-					mediaform ();
-					break;
-				case "gallery" :
-					galleryform ();
-					break;
-				case "mkpw" :
-					mkpw ();
-					break;
-				default :
-					choosemethod ();
-			}
-		} else {
-			echo "<p>Ön most ki van jelentkezve.</p>";
-			
-			enterpw ( $pw );
-		}
-		
-		?>
-</p>
-
-	<p>&nbsp;</p>
-</body>
-</html>

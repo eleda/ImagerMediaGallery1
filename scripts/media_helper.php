@@ -1,5 +1,7 @@
 <?php
 
+// HELPER FUNS 
+
 function curURL() {
 	$pageURL = 'http';
 	// if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
@@ -16,11 +18,6 @@ function curpurl() {
 	return "";
 	// return curURL() . $_SERVER["SCRIPT_NAME"];
 }
-function downloadbutton($lnk) {
-	echo '<a href=" . $lnk . "><img src="dload1.png" alt=Letöltések name=dload  class=nopicborder border=0/></a>';
-}
-
-// CIKK KATEGÓRIA MUTATÁSA
 
 // DÁTUM FÜGGVÉNYEK - JAVÍTVA!
 function getdat($dat) // paraméter pl: 2011-01-27-11-56-00
@@ -58,13 +55,58 @@ function isnew($dat) // paraméter: unix timestamp
 		return false;
 	}
 }
-function shownew($dat) {
-	if (isnew ( $dat ) == true) {
-		echo "<img src=" . curURL () . "/uj.png border=0/> "; // kis kepecske
+
+function filsize($fname) {
+	$fs = filesize ( $fname );
+	$mag = 0;
+	
+	while ( $fs > 1024 ) {
+		$fs /= 1024;
+		$fs = round ( $fs );
+		$mag ++;
+	}
+	
+	switch ($mag) {
+		case 0 :
+			return $fs . " byte";
+			break;
+		case 1 :
+			return $fs . " KB";
+			break;
+		case 2 :
+			return $fs . " MB";
+			break;
+		case 3 :
+			return $fs . " GB";
+			break;
+		case 4 :
+			return $fs . " TB";
+			break;
+		default :
+			return $fs;
 	}
 }
+
+// /HELPER FUNS
+
+// VIEW FUNS
+
+function downloadbutton($lnk) {
+	?>
+	<?php include('templates/fragments/downloadbutton.php'); ?>
+	<?php
+}
+
+function shownew($dat) {
+	if (isnew ( $dat ) ) {
+		include ('templates/fragments/shownew.php');		
+	}
+}
+
 // DÁTUM FÜGGVÉNYEK VÉGE.
 function showcategory($cat) {
+
+	// load
 	$file = fopen ( "media/" . $cat . ".txt", "r" ) or exit ( "Nincs ilyen kategória." );
 	$mc = fgets ( $file );
 	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
@@ -72,24 +114,23 @@ function showcategory($cat) {
 	$mc = fgets ( $file );
 	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
 	$c_desc = $mcdat;
+	$cururl = curURL();
+
+	?>
+
+	<?php include ('templates/fragments/showcategory.php'); ?>
 	
-	echo "    <h1> ";
-	echo "<img src=" . curURL () . "/med_ind.gif width=15 height=15 border=0/> "; // kis kepecske
-	echo $c_title . "</h1>";
-	
-	echo "<p>" . $c_desc . "</p>";
-	
-	medialist ( $cat );
-	
+	<?php 
 	while ( ! feof ( $file ) ) {
 		$mc = fgets ( $file );
 		$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
 		$a_text = $mcdat;
 		echo $a_text;
 	}
-	
 	fclose ( $file );
 }
+
+
 function categorylist() {
 	$categs = array ();
 	$categn = array ();
@@ -106,22 +147,11 @@ function categorylist() {
 			fclose ( $file );
 		}
 	}
-	
-	echo "<table width=400 class=medlist>";
-	
-	for($i = 0; $i < count ( $categs ); $i ++) {
-		$lin = curpurl () . "?view=channel&category=" . $categs [$i];
-		echo "<tr>";
-		echo "<td>";
-		echo "<p>";
-		echo '<img src="med.gif" width=15 height=15 border=0/>'; // kis kepecske
-		echo " <a href=" . $lin . ">" . $categn [$i] . "</a></p>";
-		echo "</td>";
-		echo "</tr>";
-	}
-	
-	echo "</table>";
+	?>
+	<?php include('templates/fragments/categorylist.php'); ?>
+	<?php
 }
+
 function medialist($cat) {
 	$a_title = array ();
 	$a_id = array ();
@@ -129,6 +159,8 @@ function medialist($cat) {
 	$a_picture = array ();
 	$a_text = array ();
 	$a_unixdate = array ();
+
+	// load
 	
 	$dir = opendir ( "media/" . $cat );
 	
@@ -190,246 +222,35 @@ function medialist($cat) {
 			}
 		}
 	}
-	
-	echo "<table width=400 border=0 cellspacing=0 cellpadding=0 class=medlist>";
-	
-	for($i = 0; $i < count ( $a_title ); $i ++) {
-		// http://imager.fw.hu/index.php?view=articles&category=hirek
-		$lin = curpurl () . "?view=media&category=" . $cat . "&id=" . $a_id [$i];
-		// $lin="#";
-		$fullfilename = "media/" . $cat . "/" . $a_file [$i];
-		$fsize = filsize ( $fullfilename );
-		echo "  <tr>";
-		echo "    <td width=100>";
-		echo "<img src=media/" . $cat . "/" . $a_picture [$i] . " alt=pict width=80 height=60/>";
-		echo "</td>";
-		echo "    <td><p><b>";
-		echo "<a href='" . $lin . "'>";
-		echo '<img src="med.gif" width=15 height=15 border=0/> '; // kis kepecske
-		echo $a_title [$i] . " " . shownew ( $a_unixdate [$i] ) . "</a></b></br>";
-		// echo " <h3>Fájl: <a href=".$fullfilename.">".$a_file[$i]." (".$fsize.")</a> | <a href='".$lin."'>Média részletei</a></h3>";
-		echo "  " . "Dátuma: " . setdat ( filectime ( $fullfilename ) ) . "<br>";
-		echo "  " . "Feltöltve: " . setdat ( $a_unixdate [$i] ) . "</p>";		
-		echo "</td>";
-		echo "  </tr>";
-	}
-	
-	// echo $fil;
-	echo "</table>";
+	?>
+	<?php include ('templates/fragments/medialist.php') ?>
+	<?php
 }
-function filsize($fname) {
-	$fs = filesize ( $fname );
-	$mag = 0;
-	
-	while ( $fs > 1024 ) {
-		$fs /= 1024;
-		$fs = round ( $fs );
-		$mag ++;
-	}
-	
-	switch ($mag) {
-		case 0 :
-			return $fs . " byte";
-			break;
-		case 1 :
-			return $fs . " KB";
-			break;
-		case 2 :
-			return $fs . " MB";
-			break;
-		case 3 :
-			return $fs . " GB";
-			break;
-		case 4 :
-			return $fs . " TB";
-			break;
-		default :
-			return $fs;
-	}
-}
+
 
 // CIKK MEGJELENÍTÉSE
 function showmedia($cat, $id) {
-	echo "<table width='100%' border='0' cellspacing='0' cellpadding='0'>";
-	echo "  <tr>";
-	echo "<td>";
-	
-	$file = fopen ( "media/" . $cat . ".txt", "r" ) or exit ( "Nincs ilyen kategória." );
-	$mc = fgets ( $file );
-	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-	$c_title = $mcdat;
-	$mc = fgets ( $file );
-	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-	$c_desc = $mcdat;
-	fclose ( $file );
-	
-	$file = fopen ( "media/" . $cat . "/" . $id . ".med", "r" ) or exit ( "Nincs ilyen cikk." );
-	
-	$mc = fgets ( $file );
-	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-	$a_title = $mcdat;
-	$mc = fgets ( $file );
-	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-	$a_date = $mcdat;
-	$da = getdat ( $a_date );
-	$uda = setdat ( $da );
-	$mc = fgets ( $file );
-	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-	$a_file = $mcdat;
-	$mc = fgets ( $file );
-	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-	$a_picture = $mcdat;
-	
-	$clin = curpurl () . "?view=channel&category=" . $cat;
-	
-	$fullfilename = "media/" . $cat . "/" . $a_file;
-	$fsize = filsize ( $fullfilename );
-	$url = curURL () . "/" . $fullfilename;
-	echo "    <h1> ";
-	echo "<img src=" . curURL () . "/med.gif width=15 height=15 border=0/> "; // kis kepecske
-	echo $a_title . " ";
-	downloadbutton ( $url );
-	echo "</h1>";
-	player ( $fullfilename, 1 );
-	
-	echo "<p class='war'>
-Ha a lejátszó nem jelenik meg, kattintson az URL címre az letöltéshez. A hiba kijatívásán dolgozunk.<br>
-A lejátszó inkompatibilis az IE 9 64 bites verziójával.
-</p>";
-	
-	echo "<p>Kategória: <a href='" . $clin . "'>" . $c_title . "</a></br>";
-	echo "    URL: <a href=" . $url . ">" . $url . "</a></br>";
-	echo "    " . "Mérete: " . $fsize . " (" . filesize ( $fullfilename ) . " bájt)</br>";
-	echo "    " . "Dátuma: " . setdat ( filectime ( $fullfilename ) ) . "</br>";
-	echo "    " . "Feltöltve: " . $uda . "</br>";
-	echo "<p></hr></p>";
-	
-	while ( ! feof ( $file ) ) {
-		$mc = fgets ( $file );
-		$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-		$a_text = $mcdat;
-		echo $a_text;
-	}
-	
-	fclose ( $file );
-	
-	echo "</td>";
-	echo "    <td valign=top>";
-	
-	echo "<h3>Adások</h3>";
-	
-	medialist ( $cat );
-	
-	echo "<h3>Csatornák</h3>";
-	
-	categorylist ();
-	
-	echo "</td>";
-	echo "  </tr>";
-	echo "</table>";
+	?>
+	<?php include ('templates/showmedia_control.php');?>
+	<?php include ('templates/fragments/showmedia.php'); ?>
+	<?php
 }
 
 
 function player($file, $typ) {
 	switch ($typ) {
 		case 1 :
-			// SILVERLIGHT LEJÁTSZÓ			
-			// echo "<p class='war'>Figyelem! A lejátszó ismeretlen okokból kifolyólag 'leadarálja' a lejátszandó műsort. A hiba kijavításáig használják a Letöltés lehetőséget. Köszönjük.</p>";
-			
-			echo "<div><object data='data:application/x-silverlight,' type='application/x-silverlight' style='height: 441px; width: 548px'>";
-			echo "            <param name='source' value='MediaPlayerTemplate.xap'/>";
-			echo "            <param name='onerror' value='onSilverlightError' />";
-			echo "            <param name='autoUpgrade' value='true' />";
-			echo "            <param name='minRuntimeVersion' value='4.0.0.0' />";
-			echo "            <param name='enableHtmlAccess' value='true' />";
-			echo "            <param name='enableGPUAcceleration' value='true' />";
-			echo "            <param name='initparams' value='playerSettings = ";
-			echo "                        <Playlist>";
-			echo "                            <AutoLoad>true</AutoLoad>";
-			echo "                            <AutoPlay>true</AutoPlay>";
-			echo "                            <DisplayTimeCode>true</DisplayTimeCode>";
-			echo "                            <EnableOffline>true</EnableOffline>";
-			echo "                            <EnablePopOut>true</EnablePopOut>";
-			echo "                            <EnableCaptions>true</EnableCaptions>";
-			echo "                            <EnableCachedComposition>true</EnableCachedComposition>";
-			echo "                            <StretchNonSquarePixels>NoStretch</StretchNonSquarePixels>";
-			echo "                            <StartMuted>false</StartMuted>";
-			echo "                            <StartWithPlaylistShowing>false</StartWithPlaylistShowing>";
-			echo "                            <Items>";
-			echo "						<PlaylistItem>";
-			echo "									<AudioCodec>WmaProfessional</AudioCodec>";
-			echo "									<Description></Description>";
-			echo "									<IsAdaptiveStreaming>false</IsAdaptiveStreaming>";
-			echo "									<MediaSource>" . $file . "</MediaSource>";
-			echo "									<ThumbSource></ThumbSource>";
-			echo "									<Title>Maxor Videólejátszó</Title>";
-			echo "									<DRM>false</DRM>";
-			echo "									<VideoCodec>VC1</VideoCodec>";
-			// echo " <FrameRate>25</FrameRate>";
-			echo "									<AspectRatioWidth>4</AspectRatioWidth>";
-			echo "									<AspectRatioHeight>3</AspectRatioHeight>";
-			echo "								</PlaylistItem>";
-			echo "			    </Items>";
-			echo "                        </Playlist>'/>       ";
-			echo "            <!--  unused valid silverlight init parameters";
-			echo "            <param name='enableFrameRateCounter' value='bool' />";
-			echo "            <param name='enableRedrawRegions' value='bool' />";
-			echo "            <param name='maxFrameRate' value='int' />";
-			echo "            <param name='allowHtmlPopupWindow' value='bool'/>";
-			echo "            <param name='background' value='colorValue'/>";
-			echo "            <param name='splashScreenSource' value='uri'/>";
-			echo "            <param name='fullScreen' value='bool'/>";
-			echo "            <param name='onFullScreenChanged' value='functionname'/>";
-			echo "            <param name='onResize' value='functionname'/>";
-			echo "            <param name='onSourceDownloadComplete' value='functionname'/>";
-			echo "            <param name='onSourceDownloadProgressChanged' value='functionname'/>";
-			echo "            <param name='windowLess' value='bool'/>";
-			echo "             --> ";
-			echo "             <div onMouseOver='highlightDownloadArea(true)' onMouseOut='highlightDownloadArea(false)'>";
-			echo "                    <img src='' style='position:relative                ";
-			echo "                  ;width:100%;height:100%;border-style:none;' onerror='this.style.display='none''/>";
-			echo "                    <img src=Preview.png style='position:relative;width:100%;height:100%;border-style:none;' ";
-			echo "onerror='this.style.display='none''/>                                            ";
-			echo "                    <div id='overlay' class='fadeLots' style='position:relative;width:100%;";
-			echo "height:100%;border-style:none;background-color:white;'/></div>";
-			echo "                    <table width='100%' height='100%' ";
-			echo "style='position:relative;'><tr><td align='center' valign='middle'>                       ";
-			echo "                    <img src='http://go2.microsoft.com/fwlink/?LinkId=108181' alt='Get Microsoft Silverlight'> ";
-			echo "                    </td></tr></table>                   ";
-			echo "                    <a href='http://go2.microsoft.com/fwlink/?LinkID=149156'>";
-			echo "                        <img src='' class='fadeCompletely'";
-			echo " style='position:relative;width:100%;height:100%;border-style:none;' alt='Get Microsoft Silverlight'/>";
-			echo "                    </a>                   ";
-			// echo " </div> ";
-			echo "        </object></div>";
+			?>
+			<?php include('templates/fragments/silverlight_player.php'); ?>
+			<?php
 			break;
 		case 2 :
-			// WINDOWS MEDIA PLAYERES LEJÁTSZÓ
-			// echo "Most szkripptel mennek a dolgok";
-			echo "<script type='text/javascript'>";
-			echo "AC_AX_RunContent( 'id','mediaPlayer','width','480','height','460','classid','CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95','codebase','http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701','standby','A Microsoft Windows Media Player összetevõinek betöltése...','type','application/x-oleobject','pluginspage','http://microsoft.com/windows/mediaplayer/en/download/','name','mediaPlayer','displaysize','4','autosize','-1','bgcolor','darkblue','showcontrols','true','showtracker','-1','showdisplay','0','showstatusbar','-1','videoborder3d','-1','src','" . $file . "'
-,'autostart','true','designtimesp','5311','loop','false','filename','" . $file . "','animationatstart','true','transparentatstart','false' ); //end AC code";
-			
-			echo "</script><noscript><OBJECT id='mediaPlayer' width=480 height=460";
-			echo "    classid='CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95'";
-			echo "codebase='http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701'";
-			echo "standby='A Microsoft Windows Media Player összetevõinek betöltése...' type='application/x-oleobject'>";
-			echo "<param name='fileName' value=" . $file . "97.mp3>";
-			echo "<param name='animationatStart' value='true'>";
-			echo "<param name='transparentatStart' value='false'>";
-			echo "<param name='autoStart' value=true>";
-			echo "<param name='showControls' value=true>";
-			echo "<param name='loop' value=false>";
-			echo "<EMBED type='application/x-mplayer2'";
-			echo "pluginspage='http://microsoft.com/windows/mediaplayer/en/download/'";
-			echo "id='mediaPlayer' name='mediaPlayer' displaysize='4' autosize='-1'";
-			echo "bgcolor='darkblue' showcontrols=true showtracker='-1'";
-			echo "showdisplay='0' showstatusbar='-1' videoborder3d='-1' width=320 height=285";
-			echo "src=" . $file . " autostart=true designtimesp='5311' loop=true>";
-			echo "</EMBED>";
-			echo "</OBJECT></noscript>";
+			?>
+			<?php include('templates/fragments/wmp_player.php'); ?>
 			break;
 		default :
-			echo "<p>Nincs lejátszó</p>";
+			?>
+			<p>Nincs lejátszó</p>
+			<?php
 	}
 }

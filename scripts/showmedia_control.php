@@ -30,8 +30,9 @@ $a_picture = $mcdat;
 $clin = curpurl () . "?view=channel&category=" . $cat;
 
 $fullfilename = "media/" . $cat . "/" . $a_file;
+
 $fsize = filsize ( $fullfilename );
-$url = curURL () . "/" . $fullfilename;
+$url = $fullfilename;
 
 $cururl = curURL();
 // /GET MEDIA DATA

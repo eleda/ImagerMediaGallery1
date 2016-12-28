@@ -10,13 +10,12 @@
 	<?php player ( $fullfilename, 1 ) ?>
 	
 	<p class='war'>
-		Ha a lejátszó nem jelenik meg, kattintson az URL címre az letöltéshez. A hiba kijatívásán dolgozunk.<br>
-		A lejátszó inkompatibilis az IE 9 64 bites verziójával.
+		Ha a lejátszó nem jelenik meg, kattintson az URL címre az letöltéshez.
 	</p>
 	
 	<p>Kategória: <a href="<?php echo $clin; ?>"><?php echo $c_title; ?></a></br>
-	URL: <a href="<?php echo $url;?>">"<?php echo $url; ?>"</a></br>
-	Mérete:<?php echo $fsize ?> ( <?php echo filesize ( $fullfilename ) ?> bájt)</br>
+	URL: <a href="<?php echo $url;?>"><?php echo $url; ?></a></br>
+	Mérete: <?php echo $fsize ?> ( <?php echo filesize ( $fullfilename ) ?> bájt)</br>
 	Dátuma: <?php echo setdat ( filectime ( $fullfilename ) ) ?> </br>
 	Feltöltve: <?php echo $uda ?> </br>
 	<p></hr></p>
