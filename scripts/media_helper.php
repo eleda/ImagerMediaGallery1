@@ -104,34 +104,9 @@ function shownew($dat) {
 }
 
 // DÁTUM FÜGGVÉNYEK VÉGE.
-function showcategory($cat) {
 
-	// load
-	$file = fopen ( "media/" . $cat . ".txt", "r" ) or exit ( "Nincs ilyen kategória." );
-	$mc = fgets ( $file );
-	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-	$c_title = $mcdat;
-	$mc = fgets ( $file );
-	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-	$c_desc = $mcdat;
-	$cururl = curURL();
-
-	?>
-
-	<?php include ('templates/fragments/showcategory.php'); ?>
-	
-	<?php 
-	while ( ! feof ( $file ) ) {
-		$mc = fgets ( $file );
-		$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-		$a_text = $mcdat;
-		echo $a_text;
-	}
-	fclose ( $file );
-}
-
-
-function categorylist() {
+function get_all_category() 
+{
 	$categs = array ();
 	$categn = array ();
 	// KATEGÓRIÁK ÖSSZEGYŰJTÉSE
@@ -147,12 +122,44 @@ function categorylist() {
 			fclose ( $file );
 		}
 	}
-	?>
-	<?php include('templates/fragments/categorylist.php'); ?>
-	<?php
+
+	$data = array();
+	$data['categs'] = $categs;
+	$data['categn'] = $categn;
+
+	return $data;
 }
 
-function medialist($cat) {
+function get_category($cat) 
+{
+	$file = fopen ( "media/" . $cat . ".txt", "r" ) or exit ( "Nincs ilyen kategória." );
+	$mc = fgets ( $file );
+	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+	$c_title = $mcdat;
+	$mc = fgets ( $file );
+	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+	$c_desc = $mcdat;
+
+	$bottom_text = array();
+
+	while ( ! feof ( $file ) ) {
+		$mc = fgets ( $file );
+		$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+		$a_text = $mcdat;
+		array_push($bottom_text, $a_text);
+	}	
+	fclose ( $file );
+
+	$data = array();
+	$data['bottom_text'] = $bottom_text;
+	$data['c_title'] = $c_title;
+	$data['c_desc'] = $c_desc;
+
+	return $data;
+}
+
+function get_all_media($cat) 
+{
 	$a_title = array ();
 	$a_id = array ();
 	$a_file = array ();
@@ -222,6 +229,96 @@ function medialist($cat) {
 			}
 		}
 	}
+
+	$data = array();
+	$data['a_title'] = $a_title;
+	$data['a_id'] = $a_id;
+	$data['a_file'] = $a_file;
+	$data['a_picture'] = $a_picture;
+	$data['a_text'] = $a_text;
+	$data['a_unixdate'] = $a_unixdate;
+
+	return $data;
+}
+
+function get_media($cat, $id) 
+{
+	// GET MEDIA DATA
+	$file = fopen ( "media/" . $cat . ".txt", "r" ) or exit ( "Nincs ilyen kategória." );
+	$mc = fgets ( $file );
+	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+	$c_title = $mcdat;
+	$mc = fgets ( $file );
+	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+	$c_desc = $mcdat;
+	fclose ( $file );
+
+	$file = fopen ( "media/" . $cat . "/" . $id . ".med", "r" ) or exit ( "Nincs ilyen cikk." );
+
+	$mc = fgets ( $file );
+	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+	$a_title = $mcdat;
+	$mc = fgets ( $file );
+	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+	$a_date = $mcdat;
+	$da = getdat ( $a_date );
+	$uda = setdat ( $da );
+	$mc = fgets ( $file );
+	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+	$a_file = $mcdat;
+	$mc = fgets ( $file );
+	$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+	$a_picture = $mcdat;
+
+	$clin = curpurl () . "?view=channel&category=" . $cat;
+
+	$fullfilename = "media/" . $cat . "/" . $a_file;
+
+	$fsize = filsize ( $fullfilename );
+	$url = $fullfilename;
+
+	$cururl = curURL();
+	// /GET MEDIA DATA
+
+
+	$bottom_text = array();
+	while ( ! feof ( $file ) ) {
+		$mc = fgets ( $file );
+		$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+		$a_text = $mcdat;
+		array_push($bottom_text, $a_text);
+	}
+	fclose($file);
+
+	$data = array();
+	$data['cururl'] = $cururl;
+	$data['url'] = $url;
+	$data['fsize'] = $fsize;
+	$data['fullfilename'] = $fullfilename;
+	$data['clin'] = $clin;
+	$data['bottom_text'] = $bottom_text;
+	$data['a_title'] = $a_title;
+	$data['a_date'] = $a_date;
+	$data['a_file'] = $a_file;
+	$data['a_picture'] = $a_picture;
+	$data['c_title'] = $c_title;
+	$data['c_desc'] = $c_desc;
+	$data['uda'] = $uda;
+
+	return $data;
+}
+
+
+function categorylist() {
+	$data = get_all_category();
+	?>
+
+	<?php include('templates/fragments/categorylist.php'); ?>
+	<?php
+}
+
+function medialist($cat) {
+	$data = get_all_media($cat);
 	?>
 	<?php include ('templates/fragments/medialist.php') ?>
 	<?php

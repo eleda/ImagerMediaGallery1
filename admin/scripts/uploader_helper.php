@@ -154,7 +154,6 @@ function uploadfile($fil, $todir) {
 	} else {
 		echo "Feltöltendő fájl: " . $_FILES [$fil] ["name"] . "<br />";
 		echo "Mérete: " . ($_FILES [$fil] ["size"] / 1024) . " Kb<br />";
-		// echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
 		if (file_exists ( "upload/" . $_FILES [$fil] ["name"] )) {
 			echo $_FILES [$fil] ["name"] . ": ez a fájl már egyszer fel lett töltve. </br>";
 		} else {
@@ -167,28 +166,28 @@ function uploadfile($fil, $todir) {
 
 function newmedia() {
 	echo "<h2>Új médiaelem készítése...</h2>";
-	// $fil=$_POST["fajl"];
+
 	$tit = $_POST ["cim"];
 	$cat = $_POST ["kat"];
 	$pic = $_POST ["kep"];
 	$tex = $_POST ["szoveg"];
 	$filename = $_POST ["ufile"];
-	// echo "<p>Ez lenne a file: ".$filename."</p>";
+
+	echo "$tit, $cat, $pic, $tex, $filename";
 	
 	$fil = strtolower ( iso2ascii ( $tit ) );
-	$f = "media/" . $cat . "/" . $fil . ".med";
-	$ud = "media/" . $cat;
-	// uploadfile($ud);
+	$f = "../media/" . $cat . "/" . $fil . ".med";
+	$ud = "../media/" . $cat;
 	echo "<p>Fájl készítése: " . $f . "</p>";
 	
 	try {
 		$file = fopen ( $f, "w" );
-		echo fwrite ( $file, $tit . "\r\n" );
-		echo fwrite ( $file, dat () . "\r\n" );
-		echo fwrite ( $file, $filename . "\r\n" );
+		fwrite ( $file, $tit . "\r\n" );
+		fwrite ( $file, dat () . "\r\n" );
+		fwrite ( $file, $filename . "\r\n" );
 		$pict = $pic;
-		echo fwrite ( $file, $pict . "\r\n" );
-		echo fwrite ( $file, $tex . "\r\n" );
+		fwrite ( $file, $pict . "\r\n" );
+		fwrite ( $file, $tex . "\r\n" );
 		fclose ( $file );
 		echo "<p class='info'>Kész!<p>";
 	} catch ( Exception $e ) {

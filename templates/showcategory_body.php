@@ -2,20 +2,11 @@
 	<h1>
 	<img src="images/med_ind.gif" width="15" height="15" border="0"/>
 	<!-- kis kepecske -->
-	<?php echo $c_title ?>
+	<?php echo $data['c_title']; ?>
 	</h1>
 	
-	<p><?php echo $c_desc; ?></p>
+	<p><?php echo $data['c_desc']; ?></p>
 	
-	<?php echo medialist ( $cat ) ?>
+	<?php echo medialist ( $cat ); ?>
 	
-	<?php
-	while ( ! feof ( $file ) ) {
-		$mc = fgets ( $file );
-		$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-		$a_text = $mcdat;
-		echo $a_text;
-	}
-	?>
-	
-	<?php fclose ( $file ); ?>
+

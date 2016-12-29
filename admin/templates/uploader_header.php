@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Imager Feltöltő</title>
-<link href="form.css" rel="stylesheet" type="text/css" />
+<link href="../form.css" rel="stylesheet" type="text/css" />
 </head>
 
 

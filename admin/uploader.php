@@ -14,7 +14,7 @@ switch ($meth) {
 }
 ?>
 
-<p><a href="upload.php">Új feltöltés</a></p>
-<p><a href="index.php">A főoldalra</a></p>
+<p><a href="index.php">Új feltöltés</a></p>
+<p><a href="../index.php">A főoldalra</a></p>
 
 <?php include ('templates/uploader_footer.php'); ?>

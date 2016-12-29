@@ -1,6 +1,5 @@
 		<?php
-		// echo $picp;
-		
+	
 		if ($pw == $mcc) {
 			$picp = 1;
 		} else {
@@ -8,35 +7,23 @@
 		}
 		$picp = 1;
 		if ($picp == 1) {
+			?>
+
+			<p>Állapota bejelentkezve.
+			<form id="lof" name="lof" method="post" action="<?php echo curpurl (); ?>">
+			  <label>
+			<input type="hidden" name="pw" id="pw" value="*">
+			<input type="submit" name="logout" id="logout" value="Kijelentkezés" />
+			Nincs Kijelentkezés.
+			  </label>
+			</form>
+
+			</p>
 			
-			// setcookie("pw", md5($pw), time()+3600);
-			
-			echo "<p>Állapota bejelentkezve.";
-			
-			echo "<form id=lof name=lof method=post action=" . curpurl () . ">";
-			echo "  <label>";
-			echo "<input type=hidden name='pw' id='pw' value='*'>";
-			echo "<input type=submit name=logout id=logout value=Kijelentkezés />";
-			echo "  </label>";
-			echo "</form></p>";
-			
+			<?php
 			switch ($meth) {
-				case "article" :
-					articleform ();
-					break;
-				case "pictures" :
-					$fol = $_GET ["dir"];
-					$sfol = $_GET ["subdir"];
-					pictures ( $fol, $sfol );
-					break;
-				case "download" :
-					downloadform ();
-					break;
 				case "media" :
 					mediaform ();
-					break;
-				case "gallery" :
-					galleryform ();
 					break;
 				case "mkpw" :
 					mkpw ();

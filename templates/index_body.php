@@ -23,8 +23,9 @@
 						include ($_GET ["page"]);
 					endif;
      			  else:
-     			  	echo '<p>Megj. Ez egy egyszerű kiegészítő oldal, az eredeti lapnak nem létezett ilyen index oldala. </p>';
-     			  	categorylist ();     			  		   	
+					$data = get_all_category();
+					include('templates/fragments/index_collection.php');
+
 				  endif;
 		 }		
 		?>
