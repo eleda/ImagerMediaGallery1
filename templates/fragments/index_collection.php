@@ -1,8 +1,8 @@
-<table height=172>
+<table>
    <!-- video CATEGORY -->
    <?php for($i = 0; $i < count ( $data['categs'] ); $i ++): ?>
    <tr>
-      <td width=861 colspan=4>
+      <td colspan=4>
          <h3><?php echo $data['categn'][$i]; ?></h3>
          <p><b>Lorem Ipsum Donor</b></p>
       </td>
@@ -20,7 +20,7 @@
          $fullfilename = "media/" . $cat . "/" . $media_data['a_file'][$j];
          $fsize = filsize ( $fullfilename );
       ?>
-      <td width=233 height=148 align=center>
+      <td width="350px" height=148 align=center>
          <p>
          <p><a href="<?php echo $lin; ?>"><img src="media/<?php echo $cat;?>/<?php echo $media_data['a_picture'][$j]; ?>" width=120 height=100><br><?php echo $media_data['a_title'][$j];?></a></p>
       </td>

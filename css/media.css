@@ -1,4 +1,8 @@
-﻿.cont h5 {
+﻿.bodytable {
+	box-shadow:1px 1px 2px #CABDFF;
+}
+
+.cont h5 {
 	font-size: 11px;
 	font-family: arial, Helvetica, sans-serif;
 }
@@ -17,7 +21,8 @@ hr {
 }
 
 .cont p {
-	font-family: Trebuchet MS, Verdana, Arial, Helvetica, sans-serif;
+	font-family: 'Source Sans Pro', sans-serif;
+	/*font-family: Trebuchet MS, Verdana, Arial, Helvetica, sans-serif;*/
 	font-size: 11pt;
 }
 
@@ -33,7 +38,8 @@ h1 {
 }
 
 h1, h2, h3 {
-	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-family: 'Source Sans Pro', sans-serif;
+	/*font-family: Trebuchet MS, Arial, Helvetica, sans-serif;*/
 	color: #99CCFF;
 }
 
@@ -119,4 +125,11 @@ a:link {
 
 .medlist p {
 	font-size: 10pt;
+}
+
+.footer {
+	font-family: 'Source Sans Pro', sans-serif;
+	text-align: center;
+	padding-top: 10px;
+	color: whitesmoke;
 }

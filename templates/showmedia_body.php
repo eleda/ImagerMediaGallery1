@@ -2,7 +2,7 @@
 
 <table width='100%' border='0' cellspacing='0' cellpadding='0'>
   <tr>
-    <td valign="top">	
+    <td valign="top" width="70%">	
 	<h1>
 		<img src="images/med.gif" width="15" height="15" border="0"/>
 		<!-- kis kepecske -->

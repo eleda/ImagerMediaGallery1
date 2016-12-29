@@ -11,7 +11,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="css/media.css" />
 
-
 <!-- VIDEO.JS -->
 <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 
@@ -19,6 +18,9 @@
 <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 <!-- /VIDEO.JS -->
 
+<!-- GOOGLE FONTS -->
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Source+Sans+Pro" rel="stylesheet">  
+<!-- /GOOGLE FONTS -->
 
 
 <style type="text/css">
@@ -106,7 +108,7 @@ window.close();
       </td>
     </tr>
   <tr>
-  <td valign=top>
-    <table width='100%' border='0' height='100%'>
+  <td valign=top class="bodytable">
+    <table width="100%" align="center" border="0">
       <tr>
         <td valign='top' class='cont'>

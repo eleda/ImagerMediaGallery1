@@ -5,9 +5,9 @@
     </td>
   </tr>
 </table>
-
-<p>2011-2016 IMAGER, Elekes Dávid</p>
-
+<div class="footer">
+	<p>2011-2016 IMAGER, Elekes Dávid</p>	
+</div>
 </body>
 
 </html>
