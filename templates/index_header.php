@@ -121,11 +121,6 @@ window.close();
             <?php endfor; ?>
     </ul>
   </div>
-<header>
-    <?php if (file_exists ( "media/" . $art_cat . "/banner.jpg" )) { ?>
-       <img class="img-responsive" src="<?php echo 'media/' . $art_cat . '/banner.jpg'; ?>" alt=banner width="100%"/>
-    <?php } ?>
-</header>
 </nav>
 <div class="container-fluid">
 <div class="container">

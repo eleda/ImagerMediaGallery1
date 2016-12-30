@@ -317,7 +317,7 @@ function categorylist() {
 	<?php
 }
 
-function medialist($cat) {
+function medialist($cat, $smallview) {
 	$data = get_all_media($cat);
 	?>
 	<?php include ('templates/fragments/medialist.php') ?>
