@@ -1,46 +1,33 @@
 ﻿.bodytable {
-	box-shadow:1px 1px 2px #CABDFF;
+	padding: 20px;
 }
 
 .cont h5 {
-	font-size: 11px;
 	font-family: arial, Helvetica, sans-serif;
 }
 
 .cont {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11pt;
-	background-color: #0F1328;
-	margin: 10px;
-	padding: 15px;
-	color: #E2E4EB;
+	padding: 20px;
 }
 
 hr {
-	border: 3px dotted #003366;
+	border: 3px dotted #CDCDB9;
 }
 
 .cont p {
 	font-family: 'Source Sans Pro', sans-serif;
-	/*font-family: Trebuchet MS, Verdana, Arial, Helvetica, sans-serif;*/
-	font-size: 11pt;
 }
 
 body {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	background-color: #212958;
-	color: #FFFFFF;
-}
-
-h1 {
-	font-size: 20pt;
+	background-color: #243231;
+	color: #FFCC99;
 }
 
 h1, h2, h3 {
 	font-family: 'Source Sans Pro', sans-serif;
-	/*font-family: Trebuchet MS, Arial, Helvetica, sans-serif;*/
-	color: #99CCFF;
+	color: #FDFDF0;
 }
 
 .war {
@@ -48,12 +35,11 @@ h1, h2, h3 {
 	color: #FFFFFF;
 	background-color: #CC0000;
 	border: thin solid #8C4740;
-	background-image: url(/warbk.png);
-	padding: 5px;
+	background-image: url(../images/warbk.png);
 }
 
 a {
-	color: #FFCC33;
+	color: #A6A2AA;
 	text-decoration: none;
 }
 
@@ -75,34 +61,6 @@ a:link {
 	color: #FFFF99;
 }
 
-.mnuheader {
-	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: #3366CC;
-	background-color: #33CCFF;
-	text-indent: 5px;
-	font-weight: bolder;
-	background-image: url(menub1.jpg);
-}
-
-.mnuitem {
-	font-family: Trebuchet MS, Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: #CCFFFF;
-	background-color: #999900;
-	text-indent: 10px;
-	background-image: url(menub2.jpg);
-}
-
-.mnuback {
-	font-family: Trebuchet MS, Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: #FFFFCC;
-	background-color: #993300;
-	margin: 3px;
-	background-image: url(menuback.png);
-}
-
 .nopicborder {
 	border-top-style: none;
 	border-right-style: none;
@@ -117,14 +75,8 @@ a:link {
 }
 
 .medlist {
-	background-color: #1A2044;
 	padding: 10px;
-	border: thin solid #394795;
-	font-size: 8pt;
-}
-
-.medlist p {
-	font-size: 10pt;
+	color: gray;
 }
 
 .footer {

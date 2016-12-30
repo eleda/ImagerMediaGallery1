@@ -1,13 +1,11 @@
-<table width="400" class="medlist">	
+<div class="row medlist">	
 <?php for($i = 0; $i < count ( $data['categs'] ); $i ++): ?>
 <?php $lin = curpurl () . "?view=channel&category=" . $data['categs'][$i]; ?>
-	<tr>
-		<td>
+	<div class="row">
 		<p>
-			<img src="images/med.gif" width="15" height="15" border="0"/>
+			<img src="images/med.gif" width="15" height="15" alt="kezdő bullet"/>
 			<a href="<?php echo $lin; ?>"><?php echo $data['categn'][$i]; ?></a>
 		</p>
-		</td>
-	</tr>
+	</div>
 <?php endfor; ?>
-</table>
+</div>

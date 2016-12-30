@@ -1,1 +1,1 @@
-<img src="images/uj.png" border="0"/>
+<img src="images/uj.png" alt="Új!">

@@ -1,14 +1,25 @@
 <?php 
   $backurl = curURL ();
 ?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE html>
+<html lang="hu">
 <head>
-<meta http-equiv="Content-Language" content="hu" />
+<!-- <meta lang="HU"> -->
+<meta charset="UTF-8">
 <title>Imager Médiatár</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- BOOTSTRAP -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- /BOOTSTRAP -->
+
 <link rel="stylesheet" type="text/css" href="css/media.css" />
 
 <!-- VIDEO.JS -->
@@ -19,7 +30,7 @@
 <!-- /VIDEO.JS -->
 
 <!-- GOOGLE FONTS -->
-<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed|Source+Sans+Pro" rel="stylesheet">  
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">  
 <!-- /GOOGLE FONTS -->
 
 
@@ -90,25 +101,19 @@ window.close();
    </script>
 
 
-
-
-
 </head>
 <body>
+<div class="container-fluid">
+<div class="container">
 
-<table width='1200px' cellspacing=0 cellpadding=0>
-  <tr height=100px>
-    <td>
+<div class="row">
+
     <?php if (file_exists ( "media/" . $art_cat . "/banner.jpg" )) { ?>
-       <img src="<?php echo 'media/' . $art_cat . '/banner.jpg'; ?>" alt=banner width=1200 height=110 />
+       <img class="img-responsive" src="<?php echo 'media/' . $art_cat . '/banner.jpg'; ?>" alt=banner width=1200 height=110 />
     <?php } else { ?>
        <h1>Imager Médiatár</h1>
     <?php } ?>
 
-      </td>
-    </tr>
-  <tr>
-  <td valign=top class="bodytable">
-    <table width="100%" align="center" border="0">
-      <tr>
-        <td valign='top' class='cont'>
+</div>
+<div class="row bodytable">
+  <div class="row cont">
