@@ -20,15 +20,38 @@
 <link href="../css/form.css" rel="stylesheet" type="text/css" />
 </head>
 
+<?php
+if ($pw == $mcc) {
+	$picp = 1;
+} else {
+	$picp = 0;
+}
+	$picp = 1;
+?>
+
 <body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Imager weboldal egységes feltöltő</a>
+	    </div>
+	    <ul class="nav navbar-nav navbar-right">
+	    	<li>
+				<?php if ($picp == 1): ?>
+					<form id="lof" name="lof" method="post" action="<?php echo curpurl (); ?>">
+					<input type="hidden" name="pw" id="pw" value="*">
+					<input type="submit" name="logout" id="logout" value="Kijelentkezés" class="btn navbar-btn">
+					<label>
+					Nincs Kijelentkezés.
+					  </label>
+					</form>	
+				<?php else: ?>
+					<p>Ön most ki van jelentkezve.</p>
+					<?php enterpw ( $pw ); ?>
+				<?php endif; ?>
+			</li>
+	    </ul>
+	  </div>
+	</nav>
 	<div class="container">
-	<h1>
-		Imager weboldal egységes feltöltő Frissítve:
-		<!-- #BeginDate format:IS1 -->
-		2011-2016
-		<!-- #EndDate -->		
-	</h1>
-	<hr />
 	<p>
-
-

@@ -1,6 +1,5 @@
 <!-- EZ AZ ADMIN FELULET!!! -->
 <?php require_once('scripts/admin_helper.php'); ?>
-<?php include('templates/admin_header.php'); ?>
 
 <?php
 // setcookie
@@ -25,5 +24,6 @@ $pwf = "#&@[]~$$~@#";
 
 <?php include('scripts/generate_password.php'); ?>
 
+<?php include('templates/admin_header.php'); ?>
 <?php include('templates/admin_body.php'); ?>
 <?php include('templates/admin_footer.php'); ?>

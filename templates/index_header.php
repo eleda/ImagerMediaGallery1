@@ -103,17 +103,31 @@ window.close();
 
 </head>
 <body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="<?php echo $_SERVER["SCRIPT_NAME"]; ?>">
+      <span class="glyphicon glyphicon-hand-right"></span>
+      </a>
+    </div>
+    <?php $data = get_all_category(); ?>
+    <ul class="nav navbar-nav">
+            <?php for($i = 0; $i < count ( $data['categs'] ); $i ++): ?>
+            <?php $lin = curpurl () . "?view=channel&category=" . $data['categs'][$i]; ?>
+            <li><a href="<?php echo $lin; ?>" title="<?php echo $data['categn'][$i]; ?>">
+                <?php echo $data['categn'][$i]; ?>
+            </a></li>
+            <?php endfor; ?>
+    </ul>
+  </div>
+<header>
+    <?php if (file_exists ( "media/" . $art_cat . "/banner.jpg" )) { ?>
+       <img class="img-responsive" src="<?php echo 'media/' . $art_cat . '/banner.jpg'; ?>" alt=banner width="100%"/>
+    <?php } ?>
+</header>
+</nav>
 <div class="container-fluid">
 <div class="container">
-
 <div class="row">
-
-    <?php if (file_exists ( "media/" . $art_cat . "/banner.jpg" )) { ?>
-       <img class="img-responsive" src="<?php echo 'media/' . $art_cat . '/banner.jpg'; ?>" alt=banner width=1200 height=110 />
-    <?php } else { ?>
-       <h1>Imager Médiatár</h1>
-    <?php } ?>
-
-</div>
-<div class="row bodytable">
-  <div class="row cont">
+  <div class="row">

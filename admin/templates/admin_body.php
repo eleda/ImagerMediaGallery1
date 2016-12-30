@@ -1,38 +1,23 @@
-		<?php
-	
-		if ($pw == $mcc) {
-			$picp = 1;
-		} else {
-			$picp = 0;
-		}
-		$picp = 1;
-		if ($picp == 1) {
-			?>
-
-			<p>Állapota bejelentkezve.
-			<form id="lof" name="lof" method="post" action="<?php echo curpurl (); ?>">
-			  <label>
-			<input type="hidden" name="pw" id="pw" value="*">
-			<input type="submit" name="logout" id="logout" value="Kijelentkezés" />
-			Nincs Kijelentkezés.
-			  </label>
-			</form>
-
-			</p>
-			
-			<?php
-			switch ($meth) {
-				case "media" :
-					mediaform ();
-					break;
-				case "mkpw" :
+		<?php if ($picp == 1): ?>
+			<div class="row">
+			<div class="col-sm-3">
+				<?php choosemethod ();?>
+			</div>
+			<div class="col-sm-8">
+				<?php switch ($meth) { 
+				     case "media" : ?>
+					<?php mediaform (); ?>
+					<?php break; ?>
+				<?php case "mkpw" : ?>
 					mkpw ();
-					break;
-				default :
-					choosemethod ();
-			}
-		} else {
-			?><p>Ön most ki van jelentkezve.</p>
-			<?php			
-			enterpw ( $pw );
-		}
+					<?php break; ?>
+				<?php default : ?>
+					<p class="lead">
+						Üdvözöllek az Admin felületen! <br>
+						Ez egy feltöltőprogram az Imager weboldalhoz.
+					</p>
+					<p>A folytatáshoz válaszd a <strong>Feltöltés a Médiatárba</strong> lehetőséget.</p>
+			<?php } ?>
+			</div>
+			</div>
+		<?php endif; ?>

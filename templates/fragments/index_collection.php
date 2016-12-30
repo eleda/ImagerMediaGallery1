@@ -3,7 +3,7 @@
    <!-- video CATEGORY -->
    <?php for($i = 0; $i < count ( $data['categs'] ); $i ++): ?>
    <!-- CIM -->
-   <h3><?php echo $data['categn'][$i]; ?></h3>
+   <h2><?php echo $data['categn'][$i]; ?></h2>
    <!-- HAROM LINK -->
    <div class="row">
       <!-- 1. get data -->
@@ -11,7 +11,7 @@
       <?php $media_data = get_all_media($cat); ?>
       <?php $lin_category = curpurl () . "?view=channel&category=" . $cat; ?>
 
-      <div class="col-sm-10">
+      <div class="col-sm-11">
       <?php for($j = 0; $j < 3; $j ++): ?>
          <?php $id = $media_data['a_id'][$j]; ?>
          <?php 
@@ -21,12 +21,16 @@
          ?>
          <!-- /get data -->
             <div class="col-sm-4">
-               <p>
-               <p><a href="<?php echo $lin; ?>"><img src="media/<?php echo $cat;?>/<?php echo $media_data['a_picture'][$j]; ?>" width="120" height="100" alt="<?php echo $media_data["a_title"];?> képe"><br><?php echo $media_data['a_title'][$j];?></a></p>
+               <a href="<?php echo $lin; ?>">
+               <img src="media/<?php echo $cat;?>/<?php echo $media_data['a_picture'][$j]; ?>" class="img-thumbnail" width="100%" alt="<?php echo $media_data["a_title"];?> képe">
+               <br>
+               <p><?php echo $media_data['a_title'][$j];?></p>
+               </a>
             </div>
       <?php endfor; ?>
-      <div class="col-sm-2">
-         <p><b><a href="<?php echo $lin_category; ?>">&gt;&gt;</a></b></p>
+      </div>
+      <div class="col-sm-1">
+         <p><b><a href="<?php echo $lin_category; ?>" class="btn btn-success btn-block"><span class="glyphicon glyphicon-arrow-right" style="font-size: 20px;"></span></a></b></p>
       </div>
       </div>
    </div>
