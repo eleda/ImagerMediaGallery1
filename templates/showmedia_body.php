@@ -29,7 +29,7 @@
 	<div class="row">
     	<?php include('templates/fragments/banner.php'); ?>
 	</div>
-	<?php medialist ( $cat, true ); ?>	
+	<?php medialist ( $cat, 'col-sm-6' ); ?>	
 	<h3>Csatornák</h3>	
 	<?php categorylist (); ?>	
 	</div>

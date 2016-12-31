@@ -24,7 +24,8 @@
 					endif;
      			  else:
 					$data = get_all_category();
-					include('templates/fragments/index_collection.php');
+
+					include('templates/index_frame.php');
 
 				  endif;
 		 }		

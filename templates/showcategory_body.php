@@ -6,5 +6,5 @@
 	
 	<p><?php echo $data['c_desc']; ?></p>
 	
-	<?php echo medialist ( $cat, false ); ?>
+	<?php echo medialist ( $cat, 'col-md-3' ); ?>
 

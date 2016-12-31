@@ -158,54 +158,77 @@ function get_category($cat)
 	return $data;
 }
 
-function get_all_media($cat) 
+function get_all_media($one_cat, $elems = -1) 
 {
+	$categories = array();
+
+	if ($one_cat != null) // egy kategoria
+	{
+		array_push($categories, $one_cat);
+	}
+	else // mind
+	{
+		$cats = get_all_category();
+		foreach ($cats['categs'] as $curr_cat) {
+			array_push($categories, $curr_cat);
+		}
+	}
+
+	// load
 	$a_title = array ();
 	$a_id = array ();
 	$a_file = array ();
 	$a_picture = array ();
 	$a_text = array ();
 	$a_unixdate = array ();
+	$a_cat = array();
+	
+	$celem = 0;
+		foreach ($categories as $cat) {
+			$dir = opendir ( "media/" . $cat );
+			while ( ($fil = readdir ( $dir )) !== false)  {
 
-	// load
-	
-	$dir = opendir ( "media/" . $cat );
-	
-	while ( ($fil = readdir ( $dir )) !== false ) {
-				
-		if ((substr ( $fil, strlen ( $fil ) - 4 ) == ".med") && ($fil != ".") && ($fil != "..")) {
-			
-			array_push ( $a_id, substr ( $fil, 0, strlen ( $fil ) - 4 ) );
-			
-			$ffile = fopen ( "media/" . $cat . "/" . $fil, "r" ) or exit ( "Nincs ilyen média." );
-			$mc = fgets ( $ffile );
-			$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-			array_push ( $a_title, $mcdat );
-			$mc = fgets ( $ffile );
-			$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-			array_push ( $a_unixdate, getdat ( $mc ) );
-			$mc = fgets ( $ffile );
-			$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-			array_push ( $a_file, $mcdat );
-			$mc = fgets ( $ffile );
-			$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-			array_push ( $a_picture, $mcdat );
-			
-			$mc = fgets ( $ffile );
-			$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
-			array_push ( $a_text, $mcdat );
-			fclose ( $ffile );
+				if ($elems > -1 && $celem == $elems) 
+				{
+					break;
+				}
+						
+				if ((substr ( $fil, strlen ( $fil ) - 4 ) == ".med") && ($fil != ".") && ($fil != "..")) {
+					
+					array_push( $a_cat, $cat );
+					array_push ( $a_id, substr ( $fil, 0, strlen ( $fil ) - 4 ) );
+					
+					$ffile = fopen ( "media/" . $cat . "/" . $fil, "r" ) or exit ( "Nincs ilyen média." );
+					$mc = fgets ( $ffile );
+					$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+					array_push ( $a_title, $mcdat );
+					$mc = fgets ( $ffile );
+					$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+					array_push ( $a_unixdate, getdat ( $mc ) );
+					$mc = fgets ( $ffile );
+					$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+					array_push ( $a_file, $mcdat );
+					$mc = fgets ( $ffile );
+					$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+					array_push ( $a_picture, $mcdat );
+					
+					$mc = fgets ( $ffile );
+					$mcdat = substr ( $mc, 0, strlen ( $mc ) - 2 );
+					array_push ( $a_text, $mcdat );
+					fclose ( $ffile );
+					
+					$celem++;
+				}
+			}
 		}
-	}
 	
+	// az osszeset unix datum szerint rendezi!
 	$rend = false;
 	
 	while ( $rend == false ) {
 		$rend = true;
-		// echo "*";
 		
 		for($i = 0; $i < count ( $a_unixdate ) - 1; $i ++) {
-			// echo $a_unixdate[$i+1] ." ". $a_unixdate[$i];
 			if ($a_unixdate [$i + 1] > $a_unixdate [$i]) {
 				$rend = false;
 				$n_id = $a_id [$i + 1];
@@ -226,12 +249,16 @@ function get_all_media($cat)
 				$n_unixdate = $a_unixdate [$i + 1];
 				$a_unixdate [$i + 1] = $a_unixdate [$i];
 				$a_unixdate [$i] = $n_unixdate;
+				$n_cat = $a_cat [$i + 1];
+				$a_cat [$i + 1] = $a_cat [$i];
+				$a_cat [$i] = $n_cat;
 			}
 		}
 	}
 
 	$data = array();
 	$data['a_title'] = $a_title;
+	$data['a_cat'] = $a_cat;
 	$data['a_id'] = $a_id;
 	$data['a_file'] = $a_file;
 	$data['a_picture'] = $a_picture;
@@ -317,8 +344,8 @@ function categorylist() {
 	<?php
 }
 
-function medialist($cat, $smallview) {
-	$data = get_all_media($cat);
+function medialist($cat, $bootstrap_coltype, $elems = -1) {
+	$data = get_all_media($cat, $elems);
 	?>
 	<?php include ('templates/fragments/medialist.php') ?>
 	<?php

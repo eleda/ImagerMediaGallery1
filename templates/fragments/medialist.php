@@ -1,13 +1,15 @@
 	<div class="row medlist">
-	<?php	
+	<?php
 	for($i = 0; $i < count ( $data['a_title'] ); $i ++) {		
+		$cat = $data['a_cat'][$i];
 		$lin = curpurl () . "?view=media&category=" . $cat . "&id=" . $data['a_id'][$i];
 		$fullfilename = "media/" . $cat . "/" . $data['a_file'][$i];
 		$fsize = filsize ( $fullfilename );
+		$imagefile = 'media/' . $cat . '/' . $data['a_picture'][$i];
 		?>
-		<div class="<?php echo $smallview ? 'col-sm-6' : 'col-sm-3'; ?>">
+		<div class="<?php echo $bootstrap_coltype; ?>">
 		  <div class="row" style="padding-left:10px; padding-right:10px;">
-		    <img src="media/<?php echo $cat;?>/<?php echo $data['a_picture'][$i]; ?>" alt="pict" class="img-responsive img-thumbnail"/>
+		    <img src="<?php echo $imagefile; ?>" alt="pict" class="img-responsive img-thumbnail"/>
 		  </div>
 		  <div class="row" style="padding-left:10px; padding-right:10px;">
 		    <p>
